@@ -1,64 +1,46 @@
-import {withSentryConfig} from '@sentry/nextjs';
+import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  typescript : {
-    ignoreBuildErrors : true
+  typescript: {
+    ignoreBuildErrors: true,
   },
-  eslint : {
-    ignoreDuringBuilds : true
+  eslint: {
+    ignoreDuringBuilds: true,
   },
-  experimental : {
-    ppr: 'incremental',
-    
-  },
+  // ❌ Removed experimental.ppr since it's only for canary builds
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: 'https',
-        hostname : '*'
-      }
-    ]
-  }
+        hostname: '*',
+      },
+    ],
+  },
 };
 
 export default withSentryConfig(nextConfig, {
-// For all available options, see:
-// https://github.com/getsentry/sentry-webpack-plugin#options
+  org: "codewithdhruv",
+  project: "javascript-nextjs",
 
-org: "codewithdhruv",
-project: "javascript-nextjs",
+  // Only print logs for uploading source maps in CI
+  silent: !process.env.CI,
 
-// Only print logs for uploading source maps in CI
-silent: !process.env.CI,
+  // Upload a larger set of source maps for prettier stack traces
+  widenClientFileUpload: true,
 
-// For all available options, see:
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+  // Automatically annotate React components for better breadcrumbs
+  reactComponentAnnotation: {
+    enabled: true,
+  },
 
-// Upload a larger set of source maps for prettier stack traces (increases build time)
-widenClientFileUpload: true,
+  // Hides source maps from generated client bundles
+  hideSourceMaps: true,
 
-// Automatically annotate React components to show their full name in breadcrumbs and session replay
-reactComponentAnnotation: {
-enabled: true,
-},
+  // Automatically tree-shake Sentry logger statements
+  disableLogger: true,
 
-// Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-// This can increase your server load as well as your hosting bill.
-// Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-// side errors will fail.
-// tunnelRoute: "/monitoring",
-
-// Hides source maps from generated client bundles
-hideSourceMaps: true,
-
-// Automatically tree-shake Sentry logger statements to reduce bundle size
-disableLogger: true,
-
-// Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
-// See the following for more information:
-// https://docs.sentry.io/product/crons/
-// https://vercel.com/docs/cron-jobs
-automaticVercelMonitors: true,
+  // Enables automatic instrumentation of Vercel Cron Monitors
+  automaticVercelMonitors: true,
 });
