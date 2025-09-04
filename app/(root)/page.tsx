@@ -6,7 +6,7 @@ import { Boxes } from "@/components/ui/background-boxes";
 import SearchForm from "@/components/SearchForm";
 import { ThreeDCardDemo } from "@/components/ThreeDCard";
 import { auth } from "@/auth";
-import { sanityFetch } from "@/sanity/lib/live";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { PROJECT_QUERY } from "@/sanity/lib/queries";
 import { ProjectTypeCard } from "@/components/ProjectCard";
 
@@ -58,6 +58,7 @@ export default async function Home({ searchParams }: {
 
         </ul>
       </section>
+      <SanityLive/>
     </>
   );
 };
