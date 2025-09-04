@@ -6,6 +6,11 @@ Sentry.init({
   integrations: [
     // Session Replay (only enabled client-side)
     Sentry.replayIntegration(),
+    Sentry.feedbackIntegration({
+      colorSchema:'system',
+      isNameRequired:true,
+      isEmailRequired:true
+    })
 
     // User Feedback
     Sentry.feedbackIntegration({
