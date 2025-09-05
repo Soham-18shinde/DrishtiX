@@ -20,7 +20,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "DrishtiX",
   description: "Showcase, discover, and share innovative projects with the DrishtiX community.",
-};
+
+ icons: {
+    icon:  "/logo.png",
+  },};
 
 export default function RootLayout({
   children,

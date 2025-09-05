@@ -44,7 +44,8 @@ export default async function Home({ searchParams }: {
         <p className="text-30-semibold">
           {query ? `Search results for "${query}"` : 'Trendy Projects'}
         </p>
-        <ul className="mt-7 card_grid grid grid-cols-3 sm:grid-cols-1 lg:grid-cols-3 gap-1 justify-center">
+        <ul className="mt-7 card_grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
 
           {
             posts?.length > 0 ? (
