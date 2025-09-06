@@ -1,29 +1,25 @@
 import type { Metadata } from "next";
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Analytics } from "@vercel/analytics/next"
-import { Geist, Geist_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
+import { Poppins } from "next/font/google";
 import "./globals.css";
-import 'easymde/dist/easymde.min.css'
+import "easymde/dist/easymde.min.css";
 import { Toaster } from "@/components/ui/toaster";
 
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Load Poppins
+const poppins = Poppins({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"], // adjust weights as needed
 });
 
 export const metadata: Metadata = {
   title: "DrishtiX",
-  description: "Showcase, discover, and share innovative projects with the DrishtiX community.",
-
- icons: {
-    icon:  "/logo.png",
-  },};
+  description:
+    "Showcase, discover, and share innovative projects with the DrishtiX community.",
+  icons: {
+    icon: "/logo.png",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -32,14 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-     
+      <body className={`${poppins.className} antialiased`}>
         {children}
-        <Toaster/>
-        <Analytics/>
-        <SpeedInsights/>
+        <Toaster />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
