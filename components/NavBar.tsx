@@ -1,4 +1,4 @@
-
+"use client"; // <- must be first line
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -85,7 +85,11 @@ const NavBar = async () => {
 
         {session && session?.user ? (
           <>
-            <Link href="/project/create" className={boxClasses} onClick={() => setMenuOpen(false)}>
+            <Link
+              href="/project/create"
+              className={boxClasses}
+              onClick={() => setMenuOpen(false)}
+            >
               Create
             </Link>
 
@@ -95,7 +99,11 @@ const NavBar = async () => {
               </button>
             </form>
 
-            <Link href={`/user/${session?.id}`} className={boxClasses} onClick={() => setMenuOpen(false)}>
+            <Link
+              href={`/user/${session?.id}`}
+              className={boxClasses}
+              onClick={() => setMenuOpen(false)}
+            >
               {session.user?.name}
             </Link>
           </>
