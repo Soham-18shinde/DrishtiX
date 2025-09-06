@@ -1,28 +1,21 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { auth, signIn, signOut } from "@/auth";
 
-const NavBar = () => {
-  const [session, setSession] = useState<any>(null);
+async function handleLogin() {
+  "use server";
+  await signIn("github");
+}
 
-  useEffect(() => {
-    auth().then((s) => setSession(s));
-  }, []);
+async function handleLogout() {
+  "use server";
+  await signOut({ redirectTo: "/" });
+}
 
-  const handleLogin = async () => {
-    await signIn("github");
-    const s = await auth();
-    setSession(s);
-  };
+const NavBar = async () => {
+  const session = await auth();
 
-  const handleLogout = async () => {
-    await signOut({ redirectTo: "/" });
-    setSession(null);
-  };
-
-  // Link/Button classes: smaller spacing, glow on hover, responsive font
+  // Glow links/buttons
   const linkClasses =
     "text-gray-700 dark:text-white px-2 py-1 rounded transition duration-300 hover:text-blue-500 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] text-lg sm:text-xl";
 
@@ -45,18 +38,22 @@ const NavBar = () => {
                 Create
               </Link>
 
-              <button onClick={handleLogout} className={linkClasses}>
-                Logout
-              </button>
+              <form action={handleLogout}>
+                <button type="submit" className={linkClasses}>
+                  Logout
+                </button>
+              </form>
 
               <Link href={`/user/${session?.id}`} className={linkClasses}>
                 {session.user?.name}
               </Link>
             </>
           ) : (
-            <button onClick={handleLogin} className={linkClasses}>
-              Login
-            </button>
+            <form action={handleLogin}>
+              <button type="submit" className={linkClasses}>
+                Login
+              </button>
+            </form>
           )}
         </div>
       </nav>
